@@ -22,7 +22,7 @@ jobs:
     - name: make images
       run: make images
     - name: zip it
-      run: zip -q -r jdk17u-nosleeps.zip *
+      run: zip -q -r jdk17u-nosleeps.zip ./build/*/images/jdk/*
     - name: store jdk
       uses: actions/upload-artifact@v4.1.0
       with:
