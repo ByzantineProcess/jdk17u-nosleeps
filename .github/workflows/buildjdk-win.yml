@@ -1,0 +1,43 @@
+name: build the jdk but for windown ooooo
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          autoconf
+          tar
+          make
+          zip
+          unzip
+    - uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin' # See 'Supported distributions' for available options
+        java-version: '17'
+    - uses: actions/checkout@v3
+    - name: chmod it
+      run: chmod +x ./configure
+    - name: configure
+      run: ./configure
+    - name: make images
+      run: make images
+    - name: zip it
+      run: zip -q -r jdk17u-nosleeps.zip ./build/*/images/jdk/*
+    - name: store jdk
+      uses: actions/upload-artifact@v4.1.0
+      with:
+        name: jdk17u-nosleeps
+        path: jdk17u-nosleeps.zip
+            
