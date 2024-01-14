@@ -15,6 +15,8 @@ jobs:
     - name: install build-deps
       run: sudo apt install libfontconfig-dev libcups2-dev libx11-dev libxext-dev libxrender-dev libxrandr-dev libxtst-dev libxt-dev libasound2-dev build-essential openjdk-17-jdk -y
     - uses: actions/checkout@v3
+    - name: chmod it
+      run: chmod +x ./configure
     - name: configure
       run: ./configure
     - name: make images
